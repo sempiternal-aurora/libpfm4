@@ -840,6 +840,8 @@ typedef enum {
 	PFM_PMU_ARM_CORTEX_X4,		/* ARM Cortex X4 (ARMv9) */
 
 	PFM_PMU_ARM_OLYMPUS,		/* NVIDIA Olympus (ARMv9) */
+
+	PFM_PMU_AMD64_FAM1AH_ZEN6,	/* AMD64 Fam1Ah Zen6 */
 	/* MUST ADD NEW PMU MODELS HERE */
 
 	PFM_PMU_MAX			/* end marker */
