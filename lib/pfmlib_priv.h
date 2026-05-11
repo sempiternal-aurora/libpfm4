@@ -275,6 +275,7 @@ extern pfmlib_pmu_t amd64_fam19h_zen3_l3_support;
 extern pfmlib_pmu_t amd64_fam1ah_zen5_support;
 extern pfmlib_pmu_t amd64_fam1ah_zen5_l3_support;
 extern pfmlib_pmu_t amd64_fam1ah_zen6_support;
+extern pfmlib_pmu_t amd64_fam1ah_zen6_l3_support;
 extern pfmlib_pmu_t amd64_rapl_support;
 extern pfmlib_pmu_t intel_p6_support;
 extern pfmlib_pmu_t intel_ppro_support;
