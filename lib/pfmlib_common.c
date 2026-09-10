@@ -750,6 +750,7 @@ static pfmlib_pmu_t *pfmlib_pmus[]=
 	&arm_hisilicon_kunpeng_sccl7_l3c23_support,
 	&arm_nvidia_olympus_support,
 	&arm_apple_m1_support,
+	&arm_apple_m2_support,
 #endif
 #ifdef CONFIG_PFMLIB_ARCH_ARM64
 	&arm_cortex_a57_support,
@@ -833,6 +834,7 @@ static pfmlib_pmu_t *pfmlib_pmus[]=
 	&arm_hisilicon_kunpeng_support,
 	&arm_nvidia_olympus_support,
 	&arm_apple_m1_support,
+	&arm_apple_m2_support,
 #endif
 
 #ifdef CONFIG_PFMLIB_ARCH_S390X

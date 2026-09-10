@@ -88,7 +88,7 @@ The library supports many PMUs. The current version can handle:
 		Arm Neoverse N1, N2, N3
 		Huawei HiSilicon Kunpeng 920
 		NVIDIA Tegra410 SoC (Olympus core)
-        Apple A14, M1
+        Apple A14, A15, M1, M2
 
 	- For SPARC
 		Ultra I, II
