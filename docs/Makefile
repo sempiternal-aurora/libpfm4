@@ -183,7 +183,8 @@ ARCH_MAN += libpfm_arm_xgene.3 \
 	    libpfm_arm_neoverse_v1.3 \
 	    libpfm_arm_neoverse_v2.3 \
 	    libpfm_arm_neoverse_v3.3 \
-	    libpfm_arm_nvidia_olympus.3
+	    libpfm_arm_nvidia_olympus.3 \
+	    libpfm_arm_apple_m1.3
 endif
 
 ifeq ($(CONFIG_PFMLIB_ARCH_MIPS),y)

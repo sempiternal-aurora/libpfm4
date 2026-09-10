@@ -831,6 +831,7 @@ static pfmlib_pmu_t *pfmlib_pmus[]=
 	&arm_v3_support,
 	&arm_hisilicon_kunpeng_support,
 	&arm_nvidia_olympus_support,
+	&arm_apple_m1_support,
 #endif
 
 #ifdef CONFIG_PFMLIB_ARCH_S390X

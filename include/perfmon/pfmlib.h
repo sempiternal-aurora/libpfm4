@@ -843,6 +843,8 @@ typedef enum {
 
 	PFM_PMU_AMD64_FAM1AH_ZEN6,	/* AMD64 Fam1Ah Zen6 */
 	PFM_PMU_AMD64_FAM1AH_ZEN6_L3,	/* AMD64 Fam1Ah Zen6 L3 */
+
+	PFM_PMU_APPLE_M1,	/* APPLE M1 Series (ARMv8) */
 	/* MUST ADD NEW PMU MODELS HERE */
 
 	PFM_PMU_MAX			/* end marker */

@@ -43,6 +43,7 @@
 #include "events/arm_neoverse_n1_events.h"	/* ARM Neoverse N1 table */
 #include "events/arm_neoverse_v1_events.h"	/* Arm Neoverse V1 table */
 #include "events/arm_hisilicon_kunpeng_events.h" /* HiSilicon Kunpeng PMU tables */
+#include "events/arm_apple_m1_events.h"		/* Apple M1 PMU tables */
 
 static int
 pfm_arm_detect_n1(void *this)
@@ -149,6 +150,39 @@ pfm_arm_detect_hisilicon_kunpeng(void *this)
 	arm_cpuid_t attr = { .impl = 0x48, .arch = 8, .part = 0xd01 };
 
 	return pfm_arm_detect(&attr, NULL);
+}
+
+static int
+pfm_arm_detect_apple_series(int n, const int *part_nums)
+{
+	int ret = PFM_ERR_NOTSUPP;
+
+	for (int i = 0; i < n; i++) {
+		arm_cpuid_t attr = { .impl = 0x61, .arch = 8, .part = part_nums[i] };
+
+		ret = pfm_arm_detect(&attr, NULL);
+		if (ret == PFM_SUCCESS)
+			break;
+	}
+
+	return ret;
+}
+
+static int
+pfm_arm_detect_apple_m1(void *this)
+{
+	static const int part_nums[] = {
+		0x020,	// Apple A14 Icestorm
+		0x021,	// Apple A14 Firestorm
+		0x022,	// Apple M1 Icestorm
+		0x023,	// Apple M1 Firestorm
+		0x024,	// Apple M1 Pro Icestorm
+		0x025,	// Apple M1 Pro Firestorm
+		0x028,	// Apple M1 Max Icestorm
+		0x029,	// Apple M1 Max Firestorm
+	};
+
+	return pfm_arm_detect_apple_series(LIBPFM_ARRAY_SIZE(part_nums), part_nums);
 }
 
 /* ARM Cortex A57 support */
@@ -428,6 +462,31 @@ pfmlib_pmu_t arm_v1_support={
 	.pmu_detect		= pfm_arm_detect_v1,
 	.max_encoding		= 1,
 	.num_cntrs		= 6,
+
+	.get_event_encoding[PFM_OS_NONE] = pfm_arm_get_encoding,
+	 PFMLIB_ENCODE_PERF(pfm_arm_get_perf_encoding),
+	.get_event_first	= pfm_arm_get_event_first,
+	.get_event_next		= pfm_arm_get_event_next,
+	.event_is_valid		= pfm_arm_event_is_valid,
+	.validate_table		= pfm_arm_validate_table,
+	.get_event_info		= pfm_arm_get_event_info,
+	.get_event_attr_info	= pfm_arm_get_event_attr_info,
+	 PFMLIB_VALID_PERF_PATTRS(pfm_arm_perf_validate_pattrs),
+	.get_event_nattrs	= pfm_arm_get_event_nattrs,
+};
+
+pfmlib_pmu_t arm_apple_m1_support={
+	.desc			= "Apple A14/M1 Series",
+	.name			= "apple_m1",
+	.pmu			= PFM_PMU_APPLE_M1,
+	.pme_count		= LIBPFM_ARRAY_SIZE(arm_apple_m1_pe),
+	.type			= PFM_PMU_TYPE_CORE,
+	.supported_plm  	= ARMV8_PLM,
+	.pe             	= arm_apple_m1_pe,
+
+	.pmu_detect		= pfm_arm_detect_apple_m1,
+	.max_encoding		= 1,
+	.num_cntrs		= 10,
 
 	.get_event_encoding[PFM_OS_NONE] = pfm_arm_get_encoding,
 	 PFMLIB_ENCODE_PERF(pfm_arm_get_perf_encoding),
