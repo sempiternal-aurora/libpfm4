@@ -44,6 +44,7 @@
 #include "events/arm_neoverse_v1_events.h"	/* Arm Neoverse V1 table */
 #include "events/arm_hisilicon_kunpeng_events.h" /* HiSilicon Kunpeng PMU tables */
 #include "events/arm_apple_m1_events.h"		/* Apple M1 PMU tables */
+#include "events/arm_apple_m2_events.h"		/* Apple M2 PMU tables */
 
 static int
 pfm_arm_detect_n1(void *this)
@@ -180,6 +181,23 @@ pfm_arm_detect_apple_m1(void *this)
 		0x025,	// Apple M1 Pro Firestorm
 		0x028,	// Apple M1 Max Icestorm
 		0x029,	// Apple M1 Max Firestorm
+	};
+
+	return pfm_arm_detect_apple_series(LIBPFM_ARRAY_SIZE(part_nums), part_nums);
+}
+
+static int
+pfm_arm_detect_apple_m2(void *this)
+{
+	static const int part_nums[] = {
+		0x030,	// Apple A15 Blizzard
+		0x031,	// Apple A15 Avalanche
+		0x032,	// Apple M2 Blizzard
+		0x033,	// Apple M2 Avalanche
+		0x034,	// Apple M2 Pro Blizzard
+		0x035,	// Apple M2 Pro Avalanche
+		0x038,	// Apple M2 Max Blizzard
+		0x039,	// Apple M2 Max Avalanche
 	};
 
 	return pfm_arm_detect_apple_series(LIBPFM_ARRAY_SIZE(part_nums), part_nums);
@@ -485,6 +503,31 @@ pfmlib_pmu_t arm_apple_m1_support={
 	.pe             	= arm_apple_m1_pe,
 
 	.pmu_detect		= pfm_arm_detect_apple_m1,
+	.max_encoding		= 1,
+	.num_cntrs		= 10,
+
+	.get_event_encoding[PFM_OS_NONE] = pfm_arm_get_encoding,
+	 PFMLIB_ENCODE_PERF(pfm_arm_get_perf_encoding),
+	.get_event_first	= pfm_arm_get_event_first,
+	.get_event_next		= pfm_arm_get_event_next,
+	.event_is_valid		= pfm_arm_event_is_valid,
+	.validate_table		= pfm_arm_validate_table,
+	.get_event_info		= pfm_arm_get_event_info,
+	.get_event_attr_info	= pfm_arm_get_event_attr_info,
+	 PFMLIB_VALID_PERF_PATTRS(pfm_arm_perf_validate_pattrs),
+	.get_event_nattrs	= pfm_arm_get_event_nattrs,
+};
+
+pfmlib_pmu_t arm_apple_m2_support={
+	.desc			= "Apple A15/M2 Series",
+	.name			= "apple_m2",
+	.pmu			= PFM_PMU_APPLE_M2,
+	.pme_count		= LIBPFM_ARRAY_SIZE(arm_apple_m2_pe),
+	.type			= PFM_PMU_TYPE_CORE,
+	.supported_plm  	= ARMV8_PLM,
+	.pe             	= arm_apple_m2_pe,
+
+	.pmu_detect		= pfm_arm_detect_apple_m2,
 	.max_encoding		= 1,
 	.num_cntrs		= 10,
 
