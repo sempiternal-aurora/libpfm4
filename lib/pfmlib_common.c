@@ -836,6 +836,7 @@ static pfmlib_pmu_t *pfmlib_pmus[]=
 	&arm_apple_m3_support,
 	&arm_apple_m4_support,
 	&arm_apple_m5_support,
+	&arm_apple_m6_support,
 #endif
 
 #ifdef CONFIG_PFMLIB_ARCH_S390X
