@@ -866,6 +866,7 @@ extern pfmlib_pmu_t arm_apple_m1_support;
 extern pfmlib_pmu_t arm_apple_m2_support;
 extern pfmlib_pmu_t arm_apple_m3_support;
 extern pfmlib_pmu_t arm_apple_m4_support;
+extern pfmlib_pmu_t arm_apple_m5_support;
 
 extern pfmlib_pmu_t arm_nvidia_olympus_support;
 

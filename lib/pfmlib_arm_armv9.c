@@ -42,6 +42,7 @@
 #include "events/arm_cortex_x4_events.h"	/* Arm Cortex X4 table */
 #include "events/arm_nvidia_olympus_events.h"	/* NVIDIA Olympus table */
 #include "events/arm_apple_m4_events.h"		/* Apple M1 PMU tables */
+#include "events/arm_apple_m5_events.h"		/* Apple M2 PMU tables */
 
 static int
 pfm_arm_detect_n2(void *this)
@@ -134,6 +135,21 @@ pfm_arm_detect_apple_m4(void *this)
 		0x059,	// Apple M4 Brava P
 		0x060,	// Apple A18 Pro Tahiti E
 		0x061,	// Apple A18 Pro Tahiti P
+	};
+
+	return pfm_arm_detect_apple_series(LIBPFM_ARRAY_SIZE(part_nums), part_nums);
+}
+
+static int
+pfm_arm_detect_apple_m5(void *this)
+{
+	static const int part_nums[] = {
+		0x062,	// Apple M5 Hidra E
+		0x063,	// Apple M5 Hidra P
+		0x064,	// Apple M5 Sotra M
+		0x065,	// Apple M5 Sotra P
+		0x068,	// Apple M5 SotraC M
+		0x069,	// Apple M5 SotraC P
 	};
 
 	return pfm_arm_detect_apple_series(LIBPFM_ARRAY_SIZE(part_nums), part_nums);
@@ -327,6 +343,31 @@ pfmlib_pmu_t arm_apple_m4_support={
 	.pe             	= arm_apple_m4_pe,
 
 	.pmu_detect		= pfm_arm_detect_apple_m4,
+	.max_encoding		= 1,
+	.num_cntrs		= 10,
+
+	.get_event_encoding[PFM_OS_NONE] = pfm_arm_get_encoding,
+	 PFMLIB_ENCODE_PERF(pfm_arm_get_perf_encoding),
+	.get_event_first	= pfm_arm_get_event_first,
+	.get_event_next		= pfm_arm_get_event_next,
+	.event_is_valid		= pfm_arm_event_is_valid,
+	.validate_table		= pfm_arm_validate_table,
+	.get_event_info		= pfm_arm_get_event_info,
+	.get_event_attr_info	= pfm_arm_get_event_attr_info,
+	 PFMLIB_VALID_PERF_PATTRS(pfm_arm_perf_validate_pattrs),
+	.get_event_nattrs	= pfm_arm_get_event_nattrs,
+};
+
+pfmlib_pmu_t arm_apple_m5_support={
+	.desc			= "Apple M5 Series",
+	.name			= "apple_m5",
+	.pmu			= PFM_PMU_APPLE_M5,
+	.pme_count		= LIBPFM_ARRAY_SIZE(arm_apple_m5_pe),
+	.type			= PFM_PMU_TYPE_CORE,
+	.supported_plm  	= ARMV9_PLM,
+	.pe             	= arm_apple_m5_pe,
+
+	.pmu_detect		= pfm_arm_detect_apple_m5,
 	.max_encoding		= 1,
 	.num_cntrs		= 10,
 
