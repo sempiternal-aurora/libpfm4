@@ -847,6 +847,7 @@ typedef enum {
 	PFM_PMU_APPLE_M1,	/* APPLE M1 Series (ARMv8) */
 	PFM_PMU_APPLE_M2,	/* APPLE M2 Series (ARMv8) */
 	PFM_PMU_APPLE_M3,	/* APPLE M3 Series (ARMv8) */
+	PFM_PMU_APPLE_M4,	/* APPLE M4 Series (ARMv9) */
 	/* MUST ADD NEW PMU MODELS HERE */
 
 	PFM_PMU_MAX			/* end marker */
